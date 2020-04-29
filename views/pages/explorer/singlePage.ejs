@@ -1,0 +1,127 @@
+<%-include('../../partials/head.ejs')%>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card card-body">
+            <section>
+                <h2><%=post.title%></h2>
+                <div class="d-flex">
+                    <small class="text-muted">
+                        <%= moment(post.createAt) %>,
+                        Posted by <a href="/author/<%=post.author._id%>"><%=post.author.username%></a>
+                        <%=post.readTime%>
+                    </small>
+                    <% if(user){ %>
+                        <span class="ml-auto bookmark" data-post="<%=post._id%>">
+                            <% if(bookmarks.includes(post._id)){ %>
+
+                                <i class="fas fa-bookmark"></i>
+
+                            <%}else{%>
+                                <i class="far fa-bookmark"></i>
+                                <%}%>
+                        </span>
+                    <%}%>
+                </div>
+
+                <% if(post.thumbnail){ %>
+                    <img src="<%=post.thumbnail%>" class="img-fluid my-2">    
+                <%}%>
+
+                <section>
+                    <h5><%=post.title%></h5>
+                    <%-post.body%>
+                </section>
+
+                <section class="my-3">
+                    <%if(!user){%>
+                        <button class="btn btn-success btn-sm " disabled>
+                            Like (<%=post.likes.length%>)
+                        </button>
+
+                        <button class="btn btn-danger btn-sm" disabled>
+                            Dislike (<%=post.dislikes.length%>)
+                        </button>
+
+                        <p class="text-center text-muted mt-3">To Like And Comment Please <a href="/auth/login">Login</a></p>
+                        
+                    <%}else{%>
+<!-- Like Section -->
+                <button class="btn btn-success btn-sm" id="likeBtn" data-post="<%=post._id%>">
+                            <%= post.likes.includes(user._id)?'Liked':'Like' %> ( <%=post.likes.length%> )
+                </button>
+<!-- Dislike Section -->
+                <button class="btn btn-danger btn-sm" id="dislikeBtn" data-post="<%=post._id%>">
+                            <%=post.dislikes.includes(user._id)?'Disliked':'Dislike'%> ( <%=post.dislikes.length%> )
+                </button>
+<!-- Comment Section -->
+                <div class="mt-5">
+                    <label for="comment">Leave A Comment</label>
+                    <input type="text" id="comment" class="form-control" data-post="<%=post._id%>" placeholder="Press Enter To Submit">
+                </div>
+<!-- Comment Holder -->
+                <div class="mt-5" id="comment-holder">
+                    <% if(post.comments.length===0){ %>
+                        <p class="text-center text-muted">There Is No Comment</p>
+                        <%}else{%>
+                            <!-- Comments In -->
+                            <%for(let comment of post.comments.reverse()) {%>
+                                <div class="media border">
+                                    <img src="<%=comment.user.profilePics%>" 
+                                        class="rounded-circle mx-3 my-3"
+                                        style="width:40px"
+                                        >
+                                    <div class="media-body my-3">
+                                        <p><%=comment.body%></p>
+                                        <!-- Replies In -->
+                                        <div name="replies">
+                                            <%if(comment.replies.length>0){%>
+                                                <%for(let reply of comment.replies){%>
+                                                    <div class="media mt-3">
+                                                        <img 
+                                                        src="<%=reply.user.profilePics%>" 
+                                                        class="align-self-start mr-3 rounded-circle "
+                                                        style="width:40px"
+                                                        >
+                                                        <div class="media-body">
+                                                            <p><%=reply.body%></p>
+
+                                                        </div>
+                                                    </div>
+                                                <%}%>
+                                            <%}%>
+                                        </div>
+                                        <!-- New Replies In -->
+                                        <div class="my-3">
+                                            <input 
+                                            type="text" 
+                                            class="form-control"
+                                            placeholder="Press Enter To Reply"
+                                            name="reply"
+                                            data-comment="<%=comment._id%>"
+                                            
+                                            >
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%}%>
+                </div>
+                    <%}%>
+                </section>
+            </section>
+          </div>
+        </div>
+    </div>
+</div>
+
+<%-include('../../partials/footer.ejs')%>
+
+
+<script src="/scripts/bookmarks.js"></script>
+<script src="/scripts/likeDislike.js"></script>
+<script src="/scripts/comment.js"></script>
+</body>
+</html>

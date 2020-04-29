@@ -1,0 +1,77 @@
+<%-include('../../../partials/head.ejs')%>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <%-include('../../../partials/sidebar.ejs')%>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <div class="card card-body mx-5 my-5">
+                <h3><%=title%></h3>
+                <form action="/posts/edit/<%=post._id%>" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Enter Your Post Title</label>
+                        <input type="text" name="title" id="title"
+                            class="form-control <%=error.title?'is-invalid':''%> " value="<%=post.title%>">
+                        <div class="invalid-feedback"><%=error.title%></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Enter Your Post Text</label>
+                        <textarea name="body" class="form-control <%=error.body?'is-invalid':''%>"
+                            id="postBody"><%=post.body%></textarea>
+                        <div class="invalid-feedback"><%=error.body%></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Enter Your Post Tags (Max tags 10)</label>
+                        <input type="text" name="tags" id="tags" class="form-control" placeholder="tag1,tag2,tag3" value="<%=post.tags.length>0?post.tags.join(', '):''%>">
+                    </div>
+                    
+                    <%if(post.thumbnail){%>
+                        <label>Post Thumbnail</label>
+                        <img src="<%=post.thumbnail%>" class="img-fluid mb-4" id="thumbnail" alt="Thumbnail">
+                    <%}%>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                <!--  Different Form Tag includes here -->
+                        <div class="custom-file">
+                            <input type="file" name="post-thumbnail" class="custom-file-input" id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" id="inputValueShow" for="inputGroupFile01">Choose
+                                file</label>
+                        </div>
+
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Post">
+                    <a href="/posts/delete/<%=post._id%>" class="btn btn-danger">Delete Post</a>
+                    <a href="/posts" class="btn btn-success">Get All Post</a>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%-include('../../../partials/footer.ejs')%>
+<script src="https://cdn.tiny.cloud/1/xve37syhakctrcnsoalkrcft2jfeu2fhwp9545s2pugu2209/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script src="/scripts/tinymce.js"></script>
+
+<script>
+    var inputFile = document.getElementById('inputGroupFile01')
+    var inputValueShow = document.getElementById('inputValueShow')
+
+    inputFile.addEventListener('change', controllerInput)
+
+    function controllerInput(file) {
+        var fileName = file.target.value
+        var correntFileName = fileName.slice(12)
+        inputValueShow.innerHTML = correntFileName
+    }
+</script>
+
+</body>
+
+</html>

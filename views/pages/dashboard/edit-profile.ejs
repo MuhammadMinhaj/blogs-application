@@ -1,0 +1,150 @@
+<%- include('../../partials/head.ejs') %>
+
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-md-2">
+    <%-include('../../partials/sidebar.ejs')%>
+</div>
+
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card card-body my-5">
+                    <h4><%=title%></h4>
+                    <div class="profile-pics">
+                    <img src="<%= user.profilePics%>"  width=300px alt="Profile Picture" class="img-thumbnail rounded mx-auto d-block" id="profilePics">
+                    <h4 class="text-center"><%=username%></h4>
+                    <form action="/uploads/profile-pics" method="POST" class="my-2" enctype="multipart/form-data" id="profile-form-data"> 
+                                                     
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    
+                    <input type="submit" value="Upload" class="input-group-text" id="inputGroupFileAddon01">
+                    </div>
+                    <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01" name="profilePics" aria-describedby="inputGroupFileAddon01" accept="image/*">
+                    <label class="custom-file-label" id="showInputGroupFile" for="inputGroupFile01">Choose file</label>
+                    </div>
+                    </div>
+
+                    <input 
+                        type="button" 
+                        value="remove"
+                        id="profilePicsDeleteBtn"
+                        class="btn btn-danger btn-sm my-2
+                        <%=user.profilePics.includes('default.png')?'d-none':'d-block'%>" 
+                        >   
+                    </div>
+                    
+                </form>
+              
+            <form action="/dashboard/edit-profile" method="POST" id="profile-form-data">
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input 
+                            type="text"
+                            name="name" 
+                            placeholder="Enter your Name"
+                            class="form-control <%=error.name?'is-invalid':''%> "
+                            value="<%=profile.name%>"
+                            id="name">
+
+                            <div class="invalid-feedback"><%=error.name%></div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" value="<%=user.email%>" id="email" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Short Title</label>
+                            <input 
+                            type="text"
+                            name="title"
+                            placeholder="Enter your Title"
+                            class="form-control <%=error.title?'is-invalid':''%>" 
+                            value="<%=profile.title%>"
+                            id="title">
+                            <div class="invalid-feedback"><%=error.title%></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio">Enter your Bio</label>
+                            <textarea 
+                            name="bio" 
+                            id="bio" 
+                           
+                            class="form-control <%=error.bio?'is-invalid':''%>" ><%=profile.bio%></textarea>
+                            <div class="invalid-feedback"><%=error.bio%></div>
+                        </div>
+                    
+                        <div>
+                            <p class="lead">Your Social Links</p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                       <i class="fab fa-internet-explorer"></i>            
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control <%=error.website?'is-invalid':''%>" value="<%=profile.links.website%>" placeholder="Website Links" name="website">
+                                <div class="invalid-feedback"><%=error.website%></div>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                       <i class="fab fa-facebook-square"></i>            
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control <%=error.facebook?'is-invalid':''%>" placeholder="Facebook URL" value="<%=profile.links.facebook%>" name="facebook">
+                                <div class="invalid-feedback"><%=error.facebook%></div>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                       <i class="fab fa-twitter-square"></i>            
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control <%=error.twitter?'is-invalid':''%>" placeholder="Twitter URL" value="<%=profile.links.twitter%>" name="twitter">
+                                <div class="invalid-feedback" ><%=error.twitter%></div>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                       <i class="fab fa-github-square"></i>            
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control <%=error.github?'is-invalid':''%>" placeholder="Github Profile Link" value="<%=profile.links.github%>" name="github">
+                                <div class="invalid-feedback"><%=error.github%></div>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary my-3" value="Update">
+                    </form>
+                   </div>
+               </div>
+           </div> 
+        </div> 
+    </div>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
+<script>
+    var inputGroupFile = document.getElementById('inputGroupFile01')
+    var showInputGroupFile = document.getElementById('showInputGroupFile')
+
+    inputGroupFile.addEventListener('change',inputController)
+
+    function inputController(file){
+        var fileName = file.target.value;
+        var correntFileName = fileName.slice(12)
+        showInputGroupFile.innerHTML=correntFileName
+    }
+</script>
+</body>
+</html>

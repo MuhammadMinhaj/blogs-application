@@ -1,0 +1,54 @@
+<%-include('../../partials/head.ejs')%>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card card-body">
+                <div>
+                    <img style="max-width:200px " src="<%=author.profilePics%>" class="img-thumbnail img-fluid">
+                </div>
+                <div class="mt-3">
+                    <p>Name : <strong><%=author.profile.name%></strong></p>
+                    <p>Title : <strong><%=author.profile.title%></strong></p>         
+                    
+                    <p><span>Bio :</span><%=author.profile.bio%></p>
+                    <div class="mt-3">
+                        <%if(author.profile.links.website){%>
+                            <span>
+                                <a href="<%=author.profile.links.website%>" target="_blank">
+                                    <i style="font-size:20px" class="fab fa-internet-explorer"></i>
+                                </a>
+                            </span>
+                        <%}%>
+                        <%if(author.profile.links.facebook){%>
+                            <span>
+                                <a href="<%=author.profile.links.facebook%>" target="_blank">
+                                    <i style="font-size:20px" class="fab fa-facebook-square"></i>
+                                </a>
+                            </span>
+                        <%}%>
+                        <%if(author.profile.links.twitter){%>
+                            <span>
+                                <a href="<%=author.profile.links.twitter%>" target="_blank">
+                                    <i style="font-size:20px" class="fab fa-twitter-square"></i>
+                                </a>
+                            </span>
+                        <%}%>
+                        <%if(author.profile.links.github){%>
+                            <span>
+                                <a href="<%=author.profile.links.github%>"  target="_blank">
+                                    <i style="font-size:20px" class="fab fa-github-square"></i>
+                                </a>
+                            </span>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-include('../../partials/footer.ejs')%>
+
+</body>
+</html>

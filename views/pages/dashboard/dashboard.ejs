@@ -1,0 +1,59 @@
+<%- include('../../partials/head.ejs') %>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2">
+            <%-include('../../partials/sidebar.ejs')%>
+        </div>
+
+        <div class="col-md-10">
+            <div  class="row">
+                <div class="col-md-8 offset-md-2 my-5"> 
+                    <h5>Recent Post</h5>
+                    <div class="row">
+                        <%if(posts.length===0){%>
+                            <p class="text-muted">There is no post available </p>
+                        <%}else{%>
+                            <%for(let post of posts){%>
+                                <div class="card col-sm-3 m-3">
+                                    <%if(post.thumbnail){%>
+                                        <img src="<%=post.thumbnail%>" class="card-img-top my-3">
+                                    <%}%>
+                                    <div class="card-body p-0">
+                                        <a href="/explorer/<%=post._id%>">
+                                            <h6><%=post.title%></h6>    
+                                        <a>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%}%>
+                    </div>
+                    <h5>Recent Bookmarks</h5>
+                    <div class="row">
+                        <%if(bookmarks.length===0){%>
+                            <p class="text-muted">There is no Bookmarks available</p>
+                        <%}else{%>
+                            <%for(let bookmark of bookmarks){%>
+                                <div class="card col-sm-3 m-3">
+                                    <%if(bookmark.thumbnail){%>
+                                        <img src="<%=bookmark.thumbnail%>" class="card-img-top my-3">
+                                    <%}%>
+                                    <div class="card-body p-0">
+                                        <a href="/explorer/<%=bookmark._id%>">
+                                            <h6><%=bookmark.title%></h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<%- include('../../partials/footer.ejs') %>
+</body>
+</html>

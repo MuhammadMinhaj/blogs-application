@@ -1,0 +1,50 @@
+<%- include('../../partials/head.ejs') %>
+
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-md-2">
+        <%-include('../../partials/sidebar.ejs')%>
+    </div>
+    
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+            <div class="card card-body my-5">
+                <h5><%=title%></h5>
+                <div class="row">
+                <%if(bookmarks.length===0){%>
+                    <p class="m-auto text-muted my-5">There is no Bookmarks</p>
+                <%}else{%>
+                    <%for(let bookmark of bookmarks ){%>
+                        <div class="card col-sm-3 m-3">
+                            <img class="card-img-top my-3" src="<%=bookmark.thumbnail%>">
+                            <a href="/explorer/<%=bookmark._id%>">
+                            <h6><%=bookmark.title%></h6>
+                            </a>
+                        </div>
+                    <%}%>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<%- include('../../partials/footer.ejs') %>
+<!-- <script>
+    var inputGroupFile = document.getElementById('inputGroupFile01')
+    var showInputGroupFile = document.getElementById('showInputGroupFile')
+    
+    inputGroupFile.addEventListener('change',inputController)
+
+    function inputController(file){
+        var fileName = file.target.value;
+        var correntFileName = fileName.slice(12)
+        showInputGroupFile.innerHTML = correntFileName
+    }
+
+</script> -->
+
+</body>
+</html>
